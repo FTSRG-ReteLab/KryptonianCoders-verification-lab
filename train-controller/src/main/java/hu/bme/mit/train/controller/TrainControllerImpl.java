@@ -4,10 +4,30 @@ import hu.bme.mit.train.interfaces.TrainController;
 
 public class TrainControllerImpl implements TrainController {
 
+	class PrimeThread extends Thread {
+		TrainControllerImpl imp;
+        PrimeThread(TrainControllerImpl imp_) 
+        {
+          imp=imp_;
+        }
+
+        public void run() 
+        {
+           imp.followSpeed();
+        }
+	}
+	
 	private int step = 0;
 	private int referenceSpeed = 0;
 	private int speedLimit = 0;
-
+	PrimeThread t;
+	
+	TrainControllerImpl()
+	{
+		t = new PrimeThread(this);
+		t.run();
+	}
+	
 	@Override
 	public void followSpeed() {
 		if (referenceSpeed < 0) {
