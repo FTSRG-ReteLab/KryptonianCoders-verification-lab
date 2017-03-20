@@ -9,11 +9,18 @@ public class TrainControllerImpl implements TrainController {
         PrimeThread(TrainControllerImpl imp_) 
         {
           imp=imp_;
+          
         }
 
         public void run() 
         {
            imp.followSpeed();
+	        try {
+				this.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
 	}
 	
@@ -22,7 +29,7 @@ public class TrainControllerImpl implements TrainController {
 	private int speedLimit = 0;
 	PrimeThread t;
 	
-	TrainControllerImpl()
+	public TrainControllerImpl()
 	{
 		t = new PrimeThread(this);
 		t.run();
